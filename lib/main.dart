@@ -57,10 +57,19 @@ class MyApp extends StatelessWidget {
             // Condição do tempo
             const TituloSecao(titulo: 'Condição do tempo'),
             const SizedBox(height: 10),
-           Image.network(
-              'https://cdn.pixabay.com/photo/2016/11/29/05/45/clouds-1867271_1280.jpg',
+          Image.network(
+              'https://picsum.photos/400/200',
               height: 200,
+              width: double.infinity,
               fit: BoxFit.cover,
+            ),
+
+           const SizedBox(height: 10),
+
+            const Text(
+              'Ensolarado',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
             const Divider(),
@@ -71,7 +80,7 @@ class MyApp extends StatelessWidget {
 
         const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
+              children:  [
                 ItemDetalhe(
                   icone: Icons.water_drop,
                   cor: Colors.blue,
