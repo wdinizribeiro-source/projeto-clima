@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_clima/widgets/titulo_secao.dart';
-import 'package:projeto_clima/widgets/item_detalhe.dart';
+
+import 'package:projeto_clima/screen/clima_atual.dart';
+import 'package:projeto_clima/screen/previsao_semana.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,109 +14,49 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('WeatherApp'),
-          centerTitle: true,
-          backgroundColor: Colors.blue,
-        ),
-        body: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            // Cidade atual
-            const TituloSecao(titulo: 'Cidade atual'),
-            const SizedBox(height: 10),
-            const Text(
-              'Rio de Janeiro',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+      home: const HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('ClimaApp')),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ClimaAtualScreen()),
+                );
+              },
+              child: const Text('Clima atual'),
             ),
-            const Text(
-              'Quinta-feira, 15 de outubro',
-              style: TextStyle(fontSize: 16),
+          ),
+
+          const SizedBox(height: 20),
+
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const PrevisaoSemanaScreen(),
+                  ),
+                );
+              },
+              child: const Text('Previsão da semana'),
             ),
-
-            const Divider(),
-
-            // Temperatura
-            const TituloSecao(titulo: 'Temperatura'),
-            const SizedBox(height: 10),
-            const Text(
-              '26°C',
-              style: TextStyle(
-                fontSize: 48,
-                fontWeight: FontWeight.bold,
-                color: Colors.orange,
-              ),
-            ),
-            const Text(
-              'Sensação térmica: 28°C',
-              style: TextStyle(fontSize: 16),
-            ),
-
-            const Divider(),
-
-            // Condição do tempo
-            const TituloSecao(titulo: 'Condição do tempo'),
-            const SizedBox(height: 10),
-          Image.network(
-              'https://picsum.photos/400/200',
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-
-           const SizedBox(height: 10),
-
-            const Text(
-              'Ensolarado',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-
-            const Divider(),
-
-            // Detalhes
-            const TituloSecao(titulo: 'Detalhes'),
-            const SizedBox(height: 10),
-
-        const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children:  [
-                ItemDetalhe(
-                  icone: Icons.water_drop,
-                  cor: Colors.blue,
-                  valor: '65%',
-                ),
-                ItemDetalhe(
-                  icone: Icons.air,
-                  cor: Colors.green,
-                  valor: '12 km/h',
-                ),
-                ItemDetalhe(
-                  icone: Icons.umbrella,
-                  cor: Colors.purple,
-                  valor: '30%',
-                ),
-              ],
-            ),
-
-
-            const SizedBox(height: 10),
-
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [Text('65%'), Text('12 km/h'), Text('30%')],
-            ),
-
-            const Divider(),
-
-            // Atualização
-            const TituloSecao(titulo: 'Atualização'),
-            const SizedBox(height: 10),
-
-            ElevatedButton(onPressed: () {}, child: const Text('Atualizar')),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
