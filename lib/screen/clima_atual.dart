@@ -51,11 +51,14 @@ class ClimaAtualScreen extends StatelessWidget {
 
           const TituloSecao(titulo: 'Condição do tempo'),
 
-         Image.network(
-        'https://picsum.photos/seed/picsum/600/300',
-        height: 200,
-         width: double.infinity,
-         fit: BoxFit.cover,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              'https://picsum.photos/seed/picsum/600/300',
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
 
           const Divider(),
@@ -64,15 +67,32 @@ class ClimaAtualScreen extends StatelessWidget {
 
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [Text('Umidade'), Text('Vento'), Text('Pressão')],
-          ),
-
-          const Padding(
-            padding: EdgeInsets.only(top: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [Text('80%'), Text('15 km/h'), Text('1015 hPa')],
-            ),
+            children: [
+              Column(
+                children: [
+                  Icon(Icons.water_drop, color: Colors.blue),
+                  SizedBox(height: 4),
+                  Text('Umidade'),
+                  Text('80%'),
+                ],
+              ),
+              Column(
+                children: [
+                  Icon(Icons.air, color: Colors.green),
+                  SizedBox(height: 4),
+                  Text('Vento'),
+                  Text('15 km/h'),
+                ],
+              ),
+              Column(
+                children: [
+                  Icon(Icons.speed, color: Colors.orange),
+                  SizedBox(height: 4),
+                  Text('Pressão'),
+                  Text('1015 hPa'),
+                ],
+              ),
+            ],
           ),
 
           const Divider(),
