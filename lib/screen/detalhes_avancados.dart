@@ -1,13 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_clima/widgets/titulo_secao.dart';
+import 'package:projeto_clima/screen/previsao_semana.dart';
 
 class DetalhesAvancadosScreen extends StatelessWidget {
-  const DetalhesAvancadosScreen({super.key});
+  final String cidade;
+  final String temperatura;
+
+  const DetalhesAvancadosScreen({
+    super.key,
+    required this.cidade,
+    required this.temperatura,
+  });
+
+  Widget indicadorCard(IconData icone, Color cor, String valor, String titulo) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icone, color: cor, size: 35),
+            const SizedBox(height: 10),
+            Text(
+              valor,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(titulo),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Detalhes Avançados')),
+      appBar: AppBar(title: Text(cidade), centerTitle: true),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -30,116 +60,146 @@ class DetalhesAvancadosScreen extends StatelessWidget {
               trailing: const Icon(Icons.chevron_right),
             ),
           ),
-          const Divider(),
+
+          const SizedBox(height: 20),
 
           const TituloSecao(titulo: 'Indicadores'),
+
+          const SizedBox(height: 10),
+
           GridView.count(
             crossAxisCount: 2,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
             children: [
-              Card(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.sunny),
-                    SizedBox(height: 8),
-                    Text('6'),
-                    Text('Índice UV'),
-                  ],
-                ),
+              indicadorCard(Icons.sunny, Colors.amber, '6', 'Índice UV'),
+              indicadorCard(Icons.speed, Colors.blue, '1013 hPa', 'Pressão'),
+              indicadorCard(
+                Icons.visibility,
+                Colors.green,
+                '10 km',
+                'Visibilidade',
               ),
-
-              Card(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.speed),
-                    SizedBox(height: 8),
-                    Text('1013 hPa'),
-                    Text('Pressão'),
-                  ],
-                ),
-              ),
-
-              Card(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.visibility),
-                    SizedBox(height: 8),
-                    Text('10 km'),
-                    Text('Visibilidade'),
-                  ],
-                ),
-              ),
-
-              Card(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.wb_twilight),
-                    SizedBox(height: 8),
-                    Text('06:15'),
-                    Text('Nascer do Sol'),
-                  ],
-                ),
+              indicadorCard(
+                Icons.wb_twilight,
+                Colors.deepOrange,
+                '06:15',
+                'Nascer do Sol',
               ),
             ],
           ),
-          const Divider(),
 
-          const TituloSecao(titulo: 'Condição do Tempo'),
+          const SizedBox(height: 20),
+
+        const TituloSecao(titulo: 'Condição do Tempo'),
 
           const SizedBox(height: 10),
-          Stack(
-            children: [
-              Image.network(
-                'https://picsum.photos/600/300',
-                height: 200,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
 
-              const Positioned(
-                left: 16,
-                bottom: 16,
-                child: Text(
-                  '26°C',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  ),
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF1E88E5), Color(0xFF64B5F6)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
               ),
+              child: const Padding(
+                padding: EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(Icons.wb_sunny, color: Colors.white, size: 60),
 
-              const Positioned(
-                right: 16,
-                top: 16,
-                child: Icon(Icons.wb_sunny, color: Colors.white, size: 32),
+                    SizedBox(height: 20),
+
+                    Text(
+                      '26°C',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 42,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    SizedBox(height: 8),
+
+                    Text(
+                      'Ensolarado',
+                      style: TextStyle(color: Colors.white70, fontSize: 20),
+                    ),
+
+                    SizedBox(height: 12),
+
+                    Text(
+                      'Sensação térmica: 29°C',
+                      style: TextStyle(color: Colors.white70, fontSize: 14),
+                    ),
+                  ],
+                ),
               ),
-            ],
+            ),
           ),
-          const Divider(),
+
+          const SizedBox(height: 20),
 
           const TituloSecao(titulo: 'Tags'),
 
           const SizedBox(height: 10),
+
           Wrap(
-            spacing: 8,
-            runSpacing: 8,
+            spacing: 10,
+            runSpacing: 10,
             children: const [
-              Chip(label: Text('Chuva forte')),
-              Chip(label: Text('UV alto')),
-              Chip(label: Text('Vento moderado')),
-              Chip(label: Text('Umidade alta')),
-              Chip(label: Text('Frente fria')),
+              Chip(
+                avatar: Icon(Icons.cloud, size: 18),
+                label: Text('Chuva forte'),
+              ),
+              Chip(
+                avatar: Icon(Icons.wb_sunny, size: 18),
+                label: Text('UV alto'),
+              ),
+              Chip(
+                avatar: Icon(Icons.air, size: 18),
+                label: Text('Vento moderado'),
+              ),
+              Chip(
+                avatar: Icon(Icons.water_drop, size: 18),
+                label: Text('Umidade alta'),
+              ),
+              Chip(
+                avatar: Icon(Icons.ac_unit, size: 18),
+                label: Text('Frente fria'),
+              ),
             ],
+          ),
+
+          const SizedBox(height: 30),
+
+          SizedBox(
+            height: 50,
+            child: ElevatedButton.icon(
+              icon: const Icon(Icons.calendar_month),
+              label: const Text('Ver previsão da semana'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const PrevisaoSemanaScreen(),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
-      
     );
   }
 }
